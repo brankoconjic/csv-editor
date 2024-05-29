@@ -10,7 +10,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { CopyIcon, Edit2Icon } from "lucide-react";
+import { CopyIcon, Edit2Icon, Trash2Icon } from "lucide-react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useCSVDownloader } from "react-papaparse";
 
@@ -80,10 +80,10 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
     {
       accessorKey: "edit",
       header: "",
-      size: 60,
+      size: 100,
       cell: ({ row }: { row: Row<Data> }) => (
-        <div className="flex flex-col gap-1">
-          <Tooltip content="Edit" side="right">
+        <div className="flex gap-0">
+          <Tooltip content="Edit" side="top">
             <Button
               size="sm"
               className="size-8 hover:bg-background"
@@ -94,7 +94,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
             />
           </Tooltip>
 
-          <Tooltip content="Duplicate" side="right">
+          <Tooltip content="Duplicate" side="top">
             <Button
               size="sm"
               shape="pill"
