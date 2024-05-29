@@ -25,6 +25,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState<Data | null>(null);
   const [rowCount, setRowCount] = useState(0);
+  const [totalRows, setTotalRows] = useState(0);
   const [isNewRow, setIsNewRow] = useState(false);
   const [filterValue, setFilterValue] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -62,7 +63,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
           return [key, ""];
         })
       ),
-      selfId: rowCount.toString(),
+      selfId: totalRows.toString(),
     });
   };
 
@@ -71,7 +72,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
     setIsNewRow(true);
     setSelectedRow({
       ...rowData,
-      selfId: rowCount.toString(),
+      selfId: totalRows.toString(),
     });
   };
 
@@ -124,9 +125,6 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
     columns,
     state: {
       globalFilter: filterValue,
-    },
-    meta: {
-      updateData: (data: Data) => {},
     },
     globalFilterFn: "includesString",
     getCoreRowModel: getCoreRowModel(),
@@ -183,13 +181,14 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
 
   useEffect(() => {
     setRowCount(table.getFilteredRowModel().rows.length);
+    setTotalRows(table.getCoreRowModel().rows.length);
   }, [table, filterValue, setRowCount, tableData]);
 
   if (!initialData) return null;
 
   return (
     <>
-      <header className="flex items-center justify-between gap-2 pb-4">
+      <header className="flex items-center justify-between gap-2 pb-4 text-sm">
         <div className="flex items-center gap-4">
           <Input
             ref={searchRef}
@@ -201,7 +200,9 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
             }}
             className="h-8"
           />
-          <span>{rowCount} items</span>
+          <span>
+            {rowCount} of {totalRows} items
+          </span>
         </div>
 
         <div className="flex items-center gap-2">
