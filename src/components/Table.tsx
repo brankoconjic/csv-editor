@@ -81,11 +81,12 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
       header: "",
       size: 60,
       cell: ({ row }: { row: Row<Data> }) => (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1">
           <Tooltip content="Edit" side="right">
             <Button
               size="sm"
-              className="p-1 group-hover:bg-background"
+              className="size-8"
+              shape="pill"
               variant="transparent"
               onClick={() => openDialog(row.original)}
               before={<Edit2Icon className="size-3" />}
@@ -95,7 +96,8 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
           <Tooltip content="Duplicate" side="right">
             <Button
               size="sm"
-              className="p-1 group-hover:bg-background"
+              shape="pill"
+              className="size-8 hover:bg-background"
               variant="transparent"
               onClick={() => handleDuplicate(row.original)}
               before={<CopyIcon className="size-3" />}
