@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { EditIcon } from "@iconicicons/react";
 import { Button, Input, Kbd, Label, Textarea } from "@lemonsqueezy/wedges";
 import {
@@ -335,19 +336,32 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
                       ))}
 
                     {key !== "example" && key !== "description" && (
-                      <Input
-                        id={`id-${key}`}
-                        disabled={key === "selfId"}
-                        onChange={(e) => {
-                          const target = e.target as HTMLInputElement;
+                      <>
+                        <Input
+                          id={`id-${key}`}
+                          disabled={key === "selfId"}
+                          onChange={(e) => {
+                            const target = e.target as HTMLInputElement;
 
-                          setSelectedRow((prev) => ({
-                            ...prev,
-                            [key]: target.value,
-                          }));
-                        }}
-                        value={value}
-                      />
+                            setSelectedRow((prev) => ({
+                              ...prev,
+                              [key]: target.value,
+                            }));
+                          }}
+                          value={value}
+                        />
+
+                        {key === "value" && selectedRow.type === "image" && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={value ?? ""}
+                            alt={"Image preview"}
+                            width={160}
+                            height={160}
+                            className="aspect-square size-40 rounded-lg bg-surface-100 object-cover"
+                          />
+                        )}
+                      </>
                     )}
                   </Section.Item>
                 ))}

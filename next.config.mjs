@@ -9,6 +9,14 @@ const nextConfig = {
   experimental: {
     reactCompiler: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: "images.unsplash.com",
+        protocol: "https",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
