@@ -85,7 +85,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
           <Tooltip content="Edit" side="right">
             <Button
               size="sm"
-              className="size-8"
+              className="size-8 hover:bg-background"
               shape="pill"
               variant="transparent"
               onClick={() => openDialog(row.original)}
