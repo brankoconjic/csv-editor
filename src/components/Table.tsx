@@ -75,7 +75,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
         <span>
           <Button
             size="xs-icon"
-            className="p-0.5 group-hover:bg-white"
+            className="p-0.5 group-hover:bg-background"
             variant="outline"
             onClick={() => openDialog(row.original)}
             before={<EditIcon />}
@@ -170,7 +170,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
         <div className="flex items-center gap-4">
           <Input
             ref={searchRef}
-            placeholder="Search"
+            placeholder="Search (CMD+F)"
             value={filterValue}
             onChange={(e) => {
               const target = e.target as HTMLInputElement;
@@ -239,7 +239,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
                   return (
                     <th
                       key={header.id}
-                      className="flex border-b border-surface-100 bg-surface-50 py-4 pr-4 first:pl-4 last:pr-6"
+                      className="flex border-b border-surface-100 bg-surface-50 py-4 pr-4 first:pl-4 last:pr-6 dark:bg-neutral-800"
                       style={{
                         width: header.getSize(),
                       }}
