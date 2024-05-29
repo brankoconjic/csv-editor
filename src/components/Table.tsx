@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Input, Kbd, Label, Textarea, Tooltip } from "@lemonsqueezy/wedges";
+import {
+  Button,
+  Input,
+  Kbd,
+  Label,
+  Textarea,
+  Tooltip as WedgesTooltip,
+} from "@lemonsqueezy/wedges";
 import {
   ColumnDef,
   flexRender,
@@ -15,6 +22,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { useCSVDownloader } from "react-papaparse";
 
 import { getCurrentDateFormatted } from "@/lib/utils";
+import { TooltipGroupItem as Tooltip } from "@/components/Tooltip";
 import { Data } from "@/app/page";
 
 import { Section } from "./Section";
@@ -83,27 +91,29 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
       size: 100,
       cell: ({ row }: { row: Row<Data> }) => (
         <div className="flex gap-0">
-          <Tooltip content="Edit" side="top">
-            <Button
-              size="sm"
-              className="size-8 hover:bg-background"
-              shape="pill"
-              variant="transparent"
-              onClick={() => openDialog(row.original)}
-              before={<Edit2Icon className="size-3" />}
-            />
-          </Tooltip>
+          <WedgesTooltip.Provider skipDelayDuration={500} delayDuration={300}>
+            <Tooltip content="Edit" side="top">
+              <Button
+                size="sm"
+                className="size-8 hover:bg-background"
+                shape="pill"
+                variant="transparent"
+                onClick={() => openDialog(row.original)}
+                before={<Edit2Icon className="size-3" />}
+              />
+            </Tooltip>
 
-          <Tooltip content="Duplicate" side="top">
-            <Button
-              size="sm"
-              shape="pill"
-              className="size-8 hover:bg-background"
-              variant="transparent"
-              onClick={() => handleDuplicate(row.original)}
-              before={<CopyIcon className="size-3" />}
-            />
-          </Tooltip>
+            <Tooltip content="Duplicate" side="top">
+              <Button
+                size="sm"
+                shape="pill"
+                className="size-8 hover:bg-background"
+                variant="transparent"
+                onClick={() => handleDuplicate(row.original)}
+                before={<CopyIcon className="size-3" />}
+              />
+            </Tooltip>
+          </WedgesTooltip.Provider>
         </div>
       ),
     },
