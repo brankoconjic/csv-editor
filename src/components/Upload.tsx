@@ -72,7 +72,7 @@ export const Upload: React.FC<UploadProps> = ({
     <div
       {...getRootProps({
         className: cn(
-          "relative flex w-[500px] flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-10 py-20 text-surface-500",
+          "relative mx-auto flex w-[500px] max-w-[calc(100%-40px)] flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-10 py-20 text-surface-500",
           isDragActive && "border-primary-500"
         ),
       })}

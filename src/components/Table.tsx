@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { EditIcon } from "@iconicicons/react";
-import { Button, Input, Kbd, Label, Textarea } from "@lemonsqueezy/wedges";
+import { Button, Input, Kbd, Label, Textarea, Tooltip } from "@lemonsqueezy/wedges";
 import {
   ColumnDef,
   flexRender,
@@ -12,6 +10,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { CopyIcon, Edit2Icon } from "lucide-react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useCSVDownloader } from "react-papaparse";
 
@@ -67,21 +66,42 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
     });
   };
 
+  const handleDuplicate = (rowData: Data) => {
+    setDialogOpen(true);
+    setIsNewRow(true);
+    setSelectedRow({
+      ...rowData,
+      selfId: rowCount.toString(),
+    });
+  };
+
   const columns = [
     {
       accessorKey: "edit",
       header: "",
-      size: 70,
+      size: 60,
       cell: ({ row }: { row: Row<Data> }) => (
-        <span>
-          <Button
-            size="xs-icon"
-            className="p-0.5 group-hover:bg-background"
-            variant="outline"
-            onClick={() => openDialog(row.original)}
-            before={<EditIcon />}
-          />
-        </span>
+        <div className="flex flex-col gap-3">
+          <Tooltip content="Edit" side="right">
+            <Button
+              size="sm"
+              className="p-1 group-hover:bg-background"
+              variant="transparent"
+              onClick={() => openDialog(row.original)}
+              before={<Edit2Icon className="size-3" />}
+            />
+          </Tooltip>
+
+          <Tooltip content="Duplicate" side="right">
+            <Button
+              size="sm"
+              className="p-1 group-hover:bg-background"
+              variant="transparent"
+              onClick={() => handleDuplicate(row.original)}
+              before={<CopyIcon className="size-3" />}
+            />
+          </Tooltip>
+        </div>
       ),
     },
     ...Object.keys(tableData[0]).map((key) => ({
