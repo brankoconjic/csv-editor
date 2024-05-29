@@ -1,0 +1,26 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+/**
+ * Prevents output of unnecessary Tailwind classes and merges classes.
+ *
+ * @param inputs - Any number of class names or class name arrays.
+ * @returns A string of merged class names.
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+/**
+ * Returns the current date formatted as "YYYYMMDD".
+ *
+ * @returns {string} The formatted current date.
+ */
+export const getCurrentDateFormatted = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}${month}${day}`;
+};
