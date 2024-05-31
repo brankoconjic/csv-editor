@@ -39,6 +39,19 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
   const searchRef = useRef<HTMLInputElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
+  [
+    {
+      something: "something",
+      selfId: "123",
+    },
+    {
+      something: "something",
+      selfId: "124",
+    },
+  ];
+
+  const filteredData = tableData.map(({ selfId, ...rest }) => rest);
+
   const { CSVDownloader, Type } = useCSVDownloader();
   useHotkeys("mod+f", (e) => {
     e.preventDefault();
@@ -62,6 +75,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
     setSelectedRow(rowData);
   };
 
+  /* -------------------------------- Handlers -------------------------------- */
   const handleNewRow = () => {
     setDialogOpen(true);
     setIsNewRow(true);
@@ -84,11 +98,15 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
     });
   };
 
+  const handleDelete = (rowData: Data) => {
+    setTableData((prev) => prev.filter((row) => row.selfId !== rowData.selfId));
+  };
+
   const columns = [
     {
       accessorKey: "edit",
       header: "",
-      size: 100,
+      size: undefined,
       cell: ({ row }: { row: Row<Data> }) => (
         <div className="flex gap-0">
           <WedgesTooltip.Provider skipDelayDuration={500} delayDuration={300}>
@@ -111,6 +129,17 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
                 variant="transparent"
                 onClick={() => handleDuplicate(row.original)}
                 before={<CopyIcon className="size-3" />}
+              />
+            </Tooltip>
+
+            <Tooltip content="Delete" side="top">
+              <Button
+                size="sm"
+                shape="pill"
+                className="size-8 hover:bg-background"
+                variant="transparent"
+                onClick={() => handleDelete(row.original)}
+                before={<Trash2Icon className="size-3" />}
               />
             </Tooltip>
           </WedgesTooltip.Provider>
@@ -244,7 +273,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
               type={Type.Button}
               filename={`pattern-context-${formattedDate}`}
               bom={false}
-              data={tableData}
+              data={filteredData}
             >
               <a id="csv-download" tabIndex={-1} ref={downloadRef}>
                 Export CSV
