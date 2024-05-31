@@ -1,3 +1,4 @@
+import { config } from "process";
 import { useEffect, useRef, useState } from "react";
 import {
   Button,
@@ -39,18 +40,10 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
   const searchRef = useRef<HTMLInputElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
-  [
-    {
-      something: "something",
-      selfId: "123",
-    },
-    {
-      something: "something",
-      selfId: "124",
-    },
-  ];
-
-  const filteredData = tableData.map(({ selfId, ...rest }) => rest);
+  const filteredData = tableData.map((row) => {
+    const { selfId, ...rest } = row;
+    return rest;
+  });
 
   const { CSVDownloader, Type } = useCSVDownloader();
   useHotkeys("mod+f", (e) => {
