@@ -374,8 +374,8 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
                   <Section.Item hover key={key} className="flex-col items-stretch">
                     <Label htmlFor={`id-${key}`}>{key}</Label>
 
-                    {key === "example" ||
-                      (key === "description" && (
+                    {(key === "example" ||
+                      key === "description") && (
                         <Textarea
                           onChange={(e) => {
                             const target = e.target as HTMLTextAreaElement;
@@ -388,7 +388,7 @@ export function Table({ initialData }: { initialData: Data[] | null }) {
                           id={`id-${key}`}
                           value={value}
                         />
-                      ))}
+                      )}
 
                     {key !== "example" && key !== "description" && (
                       <>
